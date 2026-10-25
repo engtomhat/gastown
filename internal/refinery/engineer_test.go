@@ -290,8 +290,10 @@ func TestEngineerCloseMRWithReasonNormalizesSuperseded(t *testing.T) {
 
 func setupEngineerTerminalCloseTest(t *testing.T, activeMR string) (*Engineer, *beads.Beads, *beads.Issue, *beads.Issue, *beads.Issue) {
 	t.Helper()
-	testutil.RequireDoltContainer(t)
-	port, _ := strconv.Atoi(testutil.DoltContainerPort())
+	// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+	// database, and bd refuses (project identity mismatch) a second
+	// workspace initialized against another test's "gt" database.
+	port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 	rigPath := t.TempDir()
 	b := beads.NewIsolatedWithPort(rigPath, port)
 	if err := b.Init("gt"); err != nil {

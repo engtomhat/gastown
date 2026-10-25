@@ -1402,8 +1402,10 @@ func TestAddWithOptions_NoPrimeMDCreatedLocally(t *testing.T) {
 	// Use real bd if available; fall back to a mock for environments (like
 	// Windows CI) where bd is not installed.
 	if _, err := exec.LookPath("bd"); err == nil {
-		testutil.RequireDoltContainer(t)
-		port, _ := strconv.Atoi(testutil.DoltContainerPort())
+		// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+		// database, and bd refuses (project identity mismatch) a second
+		// workspace initialized against another test's "gt" database.
+		port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 		bd := beads.NewIsolatedWithPort(mayorRig, port)
 		if err := bd.Init("gt"); err != nil {
 			t.Fatalf("bd init: %v", err)
@@ -1752,8 +1754,10 @@ func TestAddWithOptions_NoFilesAddedToRepo(t *testing.T) {
 	// Use real bd if available; fall back to a mock for environments (like
 	// Windows CI) where bd is not installed.
 	if _, err := exec.LookPath("bd"); err == nil {
-		testutil.RequireDoltContainer(t)
-		port, _ := strconv.Atoi(testutil.DoltContainerPort())
+		// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+		// database, and bd refuses (project identity mismatch) a second
+		// workspace initialized against another test's "gt" database.
+		port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 		bd := beads.NewIsolatedWithPort(mayorRig, port)
 		if err := bd.Init("gt"); err != nil {
 			t.Fatalf("bd init: %v", err)
@@ -1898,8 +1902,10 @@ func TestAddWithOptions_SettingsInstalledInPolecatsDir(t *testing.T) {
 	// Use real bd if available; fall back to a mock for environments (like
 	// Windows CI) where bd is not installed.
 	if _, err := exec.LookPath("bd"); err == nil {
-		testutil.RequireDoltContainer(t)
-		port, _ := strconv.Atoi(testutil.DoltContainerPort())
+		// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+		// database, and bd refuses (project identity mismatch) a second
+		// workspace initialized against another test's "gt" database.
+		port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 		bd := beads.NewIsolatedWithPort(mayorRig, port)
 		if err := bd.Init("gt"); err != nil {
 			t.Fatalf("bd init: %v", err)

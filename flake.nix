@@ -24,11 +24,11 @@
       in
       {
         packages = {
-          gt = pkgs.buildGoModule {
+          gt = pkgs.buildGo127Module {
             pname = "gt";
             version = "1.0.0";
             src = ./.;
-            vendorHash = "sha256-mJzpsl4XnIm3ZSg7fFn0MOdQQW1bdOkAJ+TikiLMXJM=";
+            vendorHash = "sha256-vCiEJDhDSHkaY3sHjzOKhHBlUsRiXhcsTUderWY7ko0=";
 
             ldflags = [
               "-X github.com/gastownhall/gastown/internal/cmd.Build=nix"
@@ -57,7 +57,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = [
             beadsPkg
-            pkgs.go_1_26
+            pkgs.go_1_27
             pkgs.gopls
             pkgs.gotools
             pkgs.go-tools

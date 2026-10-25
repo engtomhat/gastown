@@ -838,11 +838,19 @@ func (b *Beads) runWithStdin(stdinData []byte, args ...string) (_ []byte, retErr
 	// Handle bd exit code 0 bug: when issue not found,
 	// bd may exit 0 but write error to stderr with empty stdout.
 	// Detect this case and treat as error to avoid JSON parse failures.
-	if stdout.Len() == 0 && stderr.Len() > 0 {
+	// `bd init --quiet` is exempt: it succeeds with empty stdout and may still
+	// write non-fatal warnings (integration setup failures) or bd's one-time
+	// usage-metrics notice to stderr, so its exit status is authoritative.
+	if stdout.Len() == 0 && stderr.Len() > 0 && !isBDInit(args) {
 		return nil, b.wrapError(fmt.Errorf("command produced no output"), stderr.String(), args)
 	}
 
 	return stripStdoutWarnings(stdout.Bytes()), nil
+}
+
+// isBDInit reports whether args invoke `bd init`.
+func isBDInit(args []string) bool {
+	return len(args) > 0 && args[0] == "init"
 }
 
 // runWithRouting executes a bd command without setting BEADS_DIR, allowing bd's

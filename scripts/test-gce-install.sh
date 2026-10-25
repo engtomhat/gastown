@@ -57,8 +57,8 @@ else
     warn "Unknown OS, assuming deps are installed"
 fi
 
-# Install Go 1.26.10+ (earlier releases trust the compromised eMudhra intermediates)
-GO_MIN_VERSION=1.26.10
+# Install Go 1.27.3+ (go.mod requires it; the beads engine embeds Dolt 2.6.0)
+GO_MIN_VERSION=1.27.3
 if command -v go &> /dev/null; then
     GO_VERSION=$(go version | grep -oP 'go\K[0-9]+\.[0-9]+(\.[0-9]+)?')
     if [[ "$(printf '%s\n' "$GO_MIN_VERSION" "$GO_VERSION" | sort -V | head -1)" == "$GO_MIN_VERSION" ]]; then

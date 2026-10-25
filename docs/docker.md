@@ -64,7 +64,7 @@ A single `apt-get install` adds the tooling Gas Town uses at runtime: `build-ess
 
 ### Language runtimes and gt dependencies
 
-Go installs from the official tarball because the Debian-packaged version lags. The Go version is controlled by `ARG GO_VERSION` (currently `1.26.10`). The Dockerfile detects the host architecture at build time, which lets the same Dockerfile produce working images on amd64 and arm64. The architecture-detection change came from commit `ac4b65d1`.
+Go installs from the official tarball because the Debian-packaged version lags. The Go version is controlled by `ARG GO_VERSION` (currently `1.27.3`). The Dockerfile detects the host architecture at build time, which lets the same Dockerfile produce working images on amd64 and arm64. The architecture-detection change came from commit `ac4b65d1`.
 
 `bd` and `dolt` install via the upstream `curl | bash` install scripts. In this image, the scripts place binaries in `/usr/local/bin`, which remains on `$PATH` for the `agent` user.
 
@@ -283,7 +283,7 @@ docker build -f Dockerfile.e2e -t gastown-test .
 docker run --rm gastown-test
 ```
 
-The e2e image installs Go 1.26, a pinned Dolt version (built from source for reproducibility), a pinned `bd` version, and the system tools needed by `gt install` and `gt dolt start` — notably `procps` and `lsof`. The default `CMD` runs `go test -tags=e2e -run TestInstall ./internal/cmd/...` against the integration tests, with `-count=1 -parallel 1` to disable caching and avoid concurrency surprises.
+The e2e image installs Go 1.27, a pinned Dolt version (built from source for reproducibility), a pinned `bd` version, and the system tools needed by `gt install` and `gt dolt start` — notably `procps` and `lsof`. The default `CMD` runs `go test -tags=e2e -run TestInstall ./internal/cmd/...` against the integration tests, with `-count=1 -parallel 1` to disable caching and avoid concurrency surprises.
 
 Common use cases for the e2e image:
 

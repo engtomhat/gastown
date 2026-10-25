@@ -416,8 +416,10 @@ func TestManager_Queue_NoBeads(t *testing.T) {
 
 func TestManager_Queue_FiltersClosedMergeRequests(t *testing.T) {
 	mgr, rigPath := setupTestManager(t)
-	testutil.RequireDoltContainer(t)
-	port, _ := strconv.Atoi(testutil.DoltContainerPort())
+	// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+	// database, and bd refuses (project identity mismatch) a second
+	// workspace initialized against another test's "gt" database.
+	port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 	b := beads.NewIsolatedWithPort(rigPath, port)
 	if err := b.Init("gt"); err != nil {
 		t.Skipf("bd init unavailable in test environment: %v", err)
@@ -531,8 +533,10 @@ func TestCompareScoredIssues_UsesDeterministicIDTieBreaker(t *testing.T) {
 
 func TestManager_PostMerge_ClosesMRAndSourceIssue(t *testing.T) {
 	mgr, rigPath := setupTestManager(t)
-	testutil.RequireDoltContainer(t)
-	port, _ := strconv.Atoi(testutil.DoltContainerPort())
+	// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+	// database, and bd refuses (project identity mismatch) a second
+	// workspace initialized against another test's "gt" database.
+	port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 	b := beads.NewIsolatedWithPort(rigPath, port)
 	if err := b.Init("gt"); err != nil {
 		t.Skipf("bd init unavailable: %v", err)
@@ -581,8 +585,10 @@ func TestManager_PostMerge_ClosesMRAndSourceIssue(t *testing.T) {
 
 func TestManager_RejectMR_ClearsMatchingActiveMR(t *testing.T) {
 	mgr, rigPath := setupTestManager(t)
-	testutil.RequireDoltContainer(t)
-	port, _ := strconv.Atoi(testutil.DoltContainerPort())
+	// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+	// database, and bd refuses (project identity mismatch) a second
+	// workspace initialized against another test's "gt" database.
+	port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 	b := beads.NewIsolatedWithPort(rigPath, port)
 	if err := b.Init("gt"); err != nil {
 		t.Skipf("bd init unavailable: %v", err)
@@ -627,8 +633,10 @@ func TestManager_RejectMR_ClearsMatchingActiveMR(t *testing.T) {
 
 func TestManager_PostMerge_ClearsMatchingActiveMRAndClosesSource(t *testing.T) {
 	mgr, rigPath := setupTestManager(t)
-	testutil.RequireDoltContainer(t)
-	port, _ := strconv.Atoi(testutil.DoltContainerPort())
+	// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+	// database, and bd refuses (project identity mismatch) a second
+	// workspace initialized against another test's "gt" database.
+	port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 	b := beads.NewIsolatedWithPort(rigPath, port)
 	if err := b.Init("gt"); err != nil {
 		t.Skipf("bd init unavailable: %v", err)
@@ -673,8 +681,10 @@ func TestManager_PostMerge_ClearsMatchingActiveMRAndClosesSource(t *testing.T) {
 
 func TestManager_PostMerge_ClosesWorkBeadFromAgentFallbackBeforeActiveMRClear(t *testing.T) {
 	mgr, rigPath := setupTestManager(t)
-	testutil.RequireDoltContainer(t)
-	port, _ := strconv.Atoi(testutil.DoltContainerPort())
+	// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+	// database, and bd refuses (project identity mismatch) a second
+	// workspace initialized against another test's "gt" database.
+	port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 	b := beads.NewIsolatedWithPort(rigPath, port)
 	if err := b.Init("gt"); err != nil {
 		t.Skipf("bd init unavailable: %v", err)
@@ -727,8 +737,10 @@ func TestManager_PostMerge_ClosesWorkBeadFromAgentFallbackBeforeActiveMRClear(t 
 
 func TestManager_PostMerge_AlreadyClosedMRRetriesActiveMRCleanup(t *testing.T) {
 	mgr, rigPath := setupTestManager(t)
-	testutil.RequireDoltContainer(t)
-	port, _ := strconv.Atoi(testutil.DoltContainerPort())
+	// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+	// database, and bd refuses (project identity mismatch) a second
+	// workspace initialized against another test's "gt" database.
+	port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 	b := beads.NewIsolatedWithPort(rigPath, port)
 	if err := b.Init("gt"); err != nil {
 		t.Skipf("bd init unavailable: %v", err)
@@ -775,8 +787,10 @@ func TestManager_PostMerge_AlreadyClosedMRRetriesActiveMRCleanup(t *testing.T) {
 
 func TestManager_TerminalCloseDoesNotClearNewerActiveMR(t *testing.T) {
 	mgr, rigPath := setupTestManager(t)
-	testutil.RequireDoltContainer(t)
-	port, _ := strconv.Atoi(testutil.DoltContainerPort())
+	// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+	// database, and bd refuses (project identity mismatch) a second
+	// workspace initialized against another test's "gt" database.
+	port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 	b := beads.NewIsolatedWithPort(rigPath, port)
 	if err := b.Init("gt"); err != nil {
 		t.Skipf("bd init unavailable: %v", err)
@@ -813,8 +827,10 @@ func TestManager_TerminalCloseDoesNotClearNewerActiveMR(t *testing.T) {
 
 func TestManager_PostMerge_AlreadyClosedMR(t *testing.T) {
 	mgr, rigPath := setupTestManager(t)
-	testutil.RequireDoltContainer(t)
-	port, _ := strconv.Atoi(testutil.DoltContainerPort())
+	// A Dolt server of its own: the fixed "gt" prefix maps to the "gt"
+	// database, and bd refuses (project identity mismatch) a second
+	// workspace initialized against another test's "gt" database.
+	port, _ := strconv.Atoi(testutil.StartIsolatedDoltContainer(t))
 	b := beads.NewIsolatedWithPort(rigPath, port)
 	if err := b.Init("gt"); err != nil {
 		t.Skipf("bd init unavailable: %v", err)
